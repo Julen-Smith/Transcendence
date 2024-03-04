@@ -1,0 +1,9 @@
+.DS_Store
+venv
+test
+Volumes/Database
+log
+.secrets
+.env
+*.pyc
+Services/Backend/login/tools/*.json

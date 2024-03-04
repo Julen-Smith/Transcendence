@@ -1,0 +1,70 @@
+version: '3.8'
+
+services: 
+
+  devops_grafana:
+    build: ./Services/Grafana/
+    container_name: devops_grafana
+    restart: unless-stopped
+    volumes:
+    - ./Volumes/Grafana/Grafana-data:/var/lib/grafana
+    ports:
+    - 3000:3000
+
+  devops_prometheus:
+    build: ./Services/Prometheus/
+    container_name: devops_prometheus
+    restart: unless-stopped
+    volumes:
+    - ./Volumes/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    - ./Volumes/Prometheus/Prometheus-data:/prometheus
+    ports:
+    - 9090:9090
+    command:
+    - '--config.file=/etc/prometheus/prometheus.yml'
+    - '--storage.tsdb.path=/prometheus'
+    - '--web.enable-lifecycle'
+
+  devops_node_exporter:
+    image: prom/node-exporter:v1.3.1
+    container_name: devops_node_exporter
+    restart: unless-stopped
+    ports:
+    - 9100:9100
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+      - "/:/rootfs:ro"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points'
+      - '^/(sys|proc|dev|host|etc)($$|/)'
+  
+  devops_elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+  devops_logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.3
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Services/Logstash/logstash-config:/usr/share/logstash/config
+      - ./Services/Logstash/logstash-pipeline:/usr/share/logstash/pipeline
+
+  devops_filebeat:
+    build:
+      context: .Services/Filebeat/filebeat-config
+      dockerfile: Dockerfile
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - Logs/:/logs
+    depends_on:
+      - logstash
+
+

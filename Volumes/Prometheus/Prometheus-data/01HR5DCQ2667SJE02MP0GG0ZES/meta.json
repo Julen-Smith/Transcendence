@@ -1,0 +1,17 @@
+{
+	"ulid": "01HR5DCQ2667SJE02MP0GG0ZES",
+	"minTime": 1709568000000,
+	"maxTime": 1709575200000,
+	"stats": {
+		"numSamples": 596409,
+		"numSeries": 1243,
+		"numChunks": 4970
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01HR5DCQ2667SJE02MP0GG0ZES"
+		]
+	},
+	"version": 1
+}

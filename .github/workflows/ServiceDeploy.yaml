@@ -1,0 +1,88 @@
+name: Specific service deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        type: choice
+        description: "Servicio a desplegar"
+        options:
+          - frontend_vue
+          - backend_login
+          - database_postgres
+          - devops_grafana
+          - devops_prometheus
+          - devops_node_exporter
+          - devops_cadvisor
+          - bonus_mail
+          - ALL
+        required: true
+      branch:
+        type: string
+        description: "Nombre de la rama o hash del commit para desplegar"
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      transcendence_frontend_service: 'Services/Frontend/'
+      transcendence_frontend_volume: 'Volumes/Frontend/'
+      transcendence_mail_service: 'Services/Mail/'
+      transcendence_mail_volume: 'Volumes/Mail/'
+      transcendence_backend_login_service: 'Services/Backend/login'
+      transcendence_backend_login_volume: 'Volumes/Backend/login'
+      transcendence_bbdd_login_service: 'Services/Database/Login'
+      transcendence_devops_service: 'Services/Devops/'
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      - name: Listar Contenido Clonado
+        run: |
+          ls -lR
+          git branch
+      
+      - name: Establecer Variables de Entorno Específicas del Servicio
+        run: |
+          echo "SERVICE_PATH=${{ github.event.inputs.service }}" >> $GITHUB_ENV
+          if [ "${{ github.event.inputs.service }}" == "frontend_vue" ]; then
+            echo "SERVICE_PATH=${{ env.transcendence_frontend_service }}" >> $GITHUB_ENV
+            echo "SERVICE_VOLUME=${{ env.transcendence_frontend_volume }}" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.service }}" == "bonus_mail" ]; then
+            echo "SERVICE_PATH=${{ env.transcendence_mail_service }}" >> $GITHUB_ENV
+            echo "SERVICE_VOLUME=${{ env.transcendence_mail_volume }}" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.service }}" == "backend_login" ]; then
+            echo "SERVICE_PATH=${{ env.transcendence_backend_login_service }}" >> $GITHUB_ENV
+            echo "SERVICE_VOLUME=${{ env.transcendence_backend_login_volume }}" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.service }}" == "database_postgres" ]; then
+            echo "SERVICE_VOLUME=${{ env.transcendence_bbdd_login_service }}" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.service }}" == "devops_grafana"  || "${{ github.event.inputs.service }}" == "devops_node_exporter" || "${{ github.event.inputs.service }}" == "devops_cadvisor" || "${{ github.event.inputs.service }}" == "devops_prometheus" ]; then
+            echo "SERVICE_PATH=${{ env.transcendence_devops_service }}" >> $GITHUB_ENV
+          fi
+
+      - name: Subir Archivos al Servidor
+        run : |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}"  > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          pwd
+          if [ "${{ github.event.inputs.service }}" != "ALL" ]; then
+            rsync -avz /home/runner/work/Transcendence/Transcendence/${SERVICE_PATH}/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/trascendence.tech/${SERVICE_PATH}/
+            rsync -avz /home/runner/work/Transcendence/Transcendence/${SERVICE_VOLUME}/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/trascendence.tech/${SERVICE_VOLUME}/
+            rsync -avz /home/runner/work/Transcendence/Transcendence/docker-compose.yml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/trascendence.tech/
+          else
+            rsync -avz /home/runner/work/Transcendence/Transcendence/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/trascendence.tech/
+          fi
+      - name: Despliegue en VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/trascendence.tech/
+            docker compose down 
+            docker compose up -d

@@ -1,0 +1,58 @@
+name: Scheduled Reload
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Se ejecuta a las 12 de la noche UTC
+  workflow_dispatch:
+
+jobs:
+  reload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Eliminar directorio existente
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd var/www/trascendence.tech
+            rm -rf var/www/trascendence.tech
+
+      - name: Clonar repositorio
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            git clone https://github.com/Julen-Smith/Transcendence.git var/www/trascendence.tech 2>&1
+            ls -la var/www/trascendence.tech 2>&1
+            cat var/www/trascendence.tech/docker-compose.yml
+
+      - name: Preparar directorios y configuración
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd var/www/trascendence.tech
+            touch .env
+            echo "${{ secrets.ENVIRON }}" > .env
+            ls -la
+            echo "Contenido de .env:"
+            cat .env
+
+      - name: Instalar dependencias y ejecutar Docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/trascendence.tech/Volumes/Frontend/Vue/Trascendence
+            npm install
+            docker compose down
+            docker compose build
+            docker compose up -d
