@@ -7,4 +7,4 @@ log
 .env
 *.pyc
 Services/Backend/login/tools/*.json
-Volumes/Prometheus/Prometheus-data/*
+Volumes/Prometheus/Prometheus-data/
