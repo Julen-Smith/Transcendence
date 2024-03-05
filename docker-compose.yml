@@ -41,7 +41,7 @@ services:
       - '--collector.filesystem.ignored-mount-points'
       - '^/(sys|proc|dev|host|etc)($$|/)'
   
-  devops_elasticsearch:
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
     environment:
       - discovery.type=single-node
@@ -58,13 +58,16 @@ services:
 
   devops_filebeat:
     build:
-      context: .Services/Filebeat/filebeat-config
+      context: ./Services/Filebeat/
       dockerfile: Dockerfile
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - Logs/:/logs
+      - ./Logs:/logs
     depends_on:
-      - logstash
+      - devops_logstash
 
-
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    ports:
+      - "5601:5601"
