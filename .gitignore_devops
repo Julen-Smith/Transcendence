@@ -1,3 +1,4 @@
+devops/grafana/volume/grafana.db
 devops/prometheus/volume/Prometheus-data
 .env
 .envs/

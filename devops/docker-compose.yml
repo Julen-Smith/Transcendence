@@ -10,6 +10,8 @@ services:
     - 3000:3000
     volumes:
     - grafana_data:/var/lib/grafana
+    networks:
+      - develop_gateway
     restart: unless-stopped
 
   prometheus:
@@ -77,6 +79,8 @@ services:
     image: docker.elastic.co/kibana/kibana:7.9.3
     ports:
       - "5601:5601"
+    networks:
+      - develop_gateway
 
 volumes:
   grafana_data:
@@ -85,3 +89,7 @@ volumes:
             type: none
             o: bind
             device: grafana/volume
+
+networks:
+  develop_gateway:
+    external: true
