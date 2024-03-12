@@ -1,6 +1,6 @@
 version: '3.8'
 
-services: 
+services:
 
   grafana:
     build: grafana/build/main
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
     ports:
     - 9100:9100
-  
+
   elasticsearch:
     build: elasticsearch/build/main
     container_name: transcendence_elasticsearch
@@ -84,11 +84,6 @@ services:
 
 volumes:
   grafana_data:
-    driver: local
-    driver_opts:
-            type: none
-            o: bind
-            device: grafana/volume
 
 networks:
   develop_gateway:
