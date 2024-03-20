@@ -3,11 +3,8 @@ import App from './App.vue';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VueCookies from 'vue-cookies';
-<<<<<<< HEAD
-import secrets from './../secrets.json'; 
-=======
+//import secrets from './../secrets.json'; 
 import './assets/tailwind.css'
->>>>>>> 380f624b6a944076f389509f4e598fa2200f7e18
 
 /*
     Inicialización de la aplicación Vue 2-3
