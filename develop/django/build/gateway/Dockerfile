@@ -22,11 +22,11 @@ RUN sudo curl  -k --header "X-Vault-Token:  ${VAULT_TOKEN}"  --request GET  http
 #Secrets 'login_google'
 RUN sudo curl  -k --header "X-Vault-Token:  ${VAULT_TOKEN}"  --request GET  https://195.35.48.173:8200/v1/transcendence/data/login_google > secrets/login_google_secrets.json
 # #Secrets 'jwt' 
-RUN sudo curl  -k --header "X-Vault-Token: ${VAULT_TOKEN}"  --request GET  https://65.109.174.85:8200/v1/transcendence/data/JWT > secrets/jwt_secrets.json
+RUN sudo curl  -k --header "X-Vault-Token: ${VAULT_TOKEN}"  --request GET  https://195.35.48.173:8200/v1/transcendence/data/JWT > secrets/jwt_secrets.json
 # #Secrets 'postgres' 
-RUN sudo curl  -k --header "X-Vault-Token: ${VAULT_TOKEN}"  --request GET  https://65.109.174.85:8200/v1/transcendence/data/postgres_db > secrets/postgres_db_secrets.json
+RUN sudo curl  -k --header "X-Vault-Token: ${VAULT_TOKEN}"  --request GET  https://195.35.48.173:8200/v1/transcendence/data/postgres_db > secrets/postgres_db_secrets.json
 # #Secrets logger
-RUN sudo curl -k --header "X-Vault-Token: ${VAULT_TOKEN}"  --request GET  https://65.109.174.85:8200/v1/transcendence/data/logger > secrets/logger_secrets.json
+RUN sudo curl -k --header "X-Vault-Token: ${VAULT_TOKEN}"  --request GET  https://195.35.48.173:8200/v1/transcendence/data/logger > secrets/logger_secrets.json
 
 # add new user
 RUN adduser -D -s /bin/bash $ADMIN \
@@ -37,3 +37,4 @@ RUN adduser -D -s /bin/bash $ADMIN \
 USER $ADMIN
 
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
+

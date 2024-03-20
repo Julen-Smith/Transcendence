@@ -34,10 +34,6 @@ except FileNotFoundError as err:
     logger.error(f"Error: Params File Not Found {err}")
     sys.exit(1)
 
-
-LOGGER = params_logger["data"]["data"]
-POSTGRES = params_db["data"]["data"]
-JWT = params_jwt["data"]["data"]
 LOGGER = params_logger["data"]["data"]
 POSTGRES = params_db["data"]["data"]
 JWT = params_jwt["data"]["data"]

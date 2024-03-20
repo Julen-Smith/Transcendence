@@ -24,7 +24,7 @@ try:
         params_login_intra = json.load(fd)
     with open("/secrets/login_google_secrets.json") as fd:
         params_login_google = json.load(fd)
-    with open("/secrets/server.json") as fd:
+    with open("/secrets/server_secrets.json") as fd:
         params_server = json.load(fd)
     with open("/secrets/logger_secrets.json") as fd:
         params_logger = json.load(fd)
