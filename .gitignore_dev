@@ -17,10 +17,10 @@ devops_holder
 deploy
 develop/vue/volume/main/src/assets/mainloop.webm
 node_modules/
-=======
 .gitignore_devops
 .gitignore_dependencies
 *.log
 node_modules
 *.log.*
->>>>>>> 380f624b6a944076f389509f4e598fa2200f7e18
+*.pyc
+log

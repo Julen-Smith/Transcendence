@@ -3,16 +3,20 @@ services:
   vue:
     build: vue/build/main
     image: transcendence_vue_login
-    ports:
-      - "8080:8080"
+    expose:
+      - 8080
     networks:
-      - transcendence
+       - transcendence
     volumes:
       - vue_data:/Trascendence
       - vue_log:/Logs
 
   login:
-    build: django/build/login
+    build:
+      context: django/build/login
+      args:
+        - VAULT_TOKEN=$VAULT_TOKEN
+
     depends_on:
       - pg-login
     image: transcendence_dj_login
@@ -25,7 +29,11 @@ services:
       - django_log:/log
 
   gateway:
-    build: django/build/gateway
+  
+    build:
+      context: django/build/gateway
+      args:
+        - VAULT_TOKEN=$VAULT_TOKEN
 
     depends_on:
       - pg-login
@@ -33,8 +41,8 @@ services:
     image: transcendence_dj_gateway
 
 
-    ports:
-      - 4242:4242
+    expose:
+      - 4242
 
     networks:
       - transcendence
@@ -43,9 +51,11 @@ services:
       - django_log:/log
 
   pg-login:
+    build: django/build/pg-login
     container_name: transcendence_pg_login
     image: transcendence_pgbase_login
-    build: django/build/pg-login
+    networks:
+      - transcendence
     restart: always
     volumes:
       - pg-login_data:/var/lib/postgresql/data

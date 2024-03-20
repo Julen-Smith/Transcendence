@@ -24,21 +24,22 @@ try:
         params_login_intra = json.load(fd)
     with open("/secrets/login_google_secrets.json") as fd:
         params_login_google = json.load(fd)
-    with open("/secrets/transcendence_server_secrets.json") as fd:
+    with open("/secrets/server.json") as fd:
         params_server = json.load(fd)
-    with open("/secrets/tools_secrets.json") as fd:
+    with open("/secrets/logger_secrets.json") as fd:
         params_logger = json.load(fd)
     with open("/secrets/postgres_db_secrets.json") as fd:
         params_db = json.load(fd)
-except FileNotFoundError:
-    logger.error(f"Error: Params File Not Found")
+except FileNotFoundError as err:
+    logger.error(f"Error: Params File Not Found {err}")
     sys.exit(1)
 
 LOGGER = params_logger["data"]["data"]
 LOGIN_INTRA = params_login_intra["data"]["data"]
-GOOGLE_OUATH = params_login_google["data"]["data"] #CAMBIAR A LOGIN_GOOGLE
+GOOGLE = params_login_google["data"]["data"] #CAMBIAR A LOGIN_GOOGLE
 TRANSCENDENCE = params_server["data"]["data"]
 POSTGRES = params_db["data"]["data"]
+logger.warning(POSTGRES)
 
 #Config with tools on vault
 LOGGER["handlers"]["file"]["filename"] = "/log/app.log"
