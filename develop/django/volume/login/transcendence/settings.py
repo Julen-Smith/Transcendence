@@ -20,29 +20,32 @@ logger = logging.getLogger("login")  # __name__ is a common choice
 logging.basicConfig(level="INFO")
 
 try:
-    with open("/secrets/login_secrets.json") as fd:
-        params_login = json.load(fd)
+    with open("/secrets/login_intra_secrets.json") as fd:
+        params_intra_login = json.load(fd)
+    with open("/secrets/login_google_secrets.json") as fd:
+        params_google_login = json.load(fd)
     with open("/secrets/login_google_secrets.json") as fd:
         params_login_google = json.load(fd)
-    with open("/secrets/transcendence_server_secrets.json") as fd:
-        params_transcendence_server = json.load(fd)
-    with open("/secrets/tools_secrets.json") as fd:
-        params_tools = json.load(fd)
+    with open("/secrets/server.json") as fd:
+        params_server = json.load(fd)
+    with open("/secrets/logger_secrets.json") as fd:
+        params_logger = json.load(fd)
     with open("/secrets/postgres_db_secrets.json") as fd:
         params_db = json.load(fd)
-except FileNotFoundError:
-    logger.error(f"Error: Params File Not Found")
+except FileNotFoundError as err:
+    logger.error(f"Error: Params File Not Found {err}")
     sys.exit(1)
 
-TOOLS = params_tools["data"]["data"]
-LOGIN = params_login["data"]["data"]
-GOOGLE_OUATH = params_login_google["data"]["data"]
-TRANSCENDENCE = params_transcendence_server["data"]["data"]
+LOGGER = params_logger["data"]["data"]
+INTRA = params_intra_login["data"]["data"]
+GOOGLE = params_google_login["data"]["data"]
+TRANSCENDENCE = params_server["data"]["data"]
 POSTGRES = params_db["data"]["data"]
+logger.warning(POSTGRES)
 
 #Config with tools on vault
-TOOLS["LOGGER"]["handlers"]["file"]["filename"] = "/log/app.log"
-logging.config.dictConfig(TOOLS["LOGGER"])
+LOGGER["handlers"]["file"]["filename"] = "/log/app.log"
+logging.config.dictConfig(LOGGER)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

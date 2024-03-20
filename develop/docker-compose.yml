@@ -6,22 +6,20 @@ services:
     expose:
       - 8080
     networks:
-      - transcendence
+       - transcendence
     volumes:
       - vue_data:/Trascendence
       - vue_log:/Logs
 
   login:
-    build: django/build/login
+    build:
+      context: django/build/login
+      args:
+        - VAULT_TOKEN=$VAULT_TOKEN
+
     depends_on:
       - pg-login
     image: transcendence_dj_login
-<<<<<<< HEAD
-=======
-    env_file:
-      - .envs/.env.login
-
->>>>>>> dev-lugonzal
     expose:
         - 25671
     networks:
@@ -31,7 +29,11 @@ services:
       - django_log:/log
 
   gateway:
-    build: django/build/gateway
+  
+    build:
+      context: django/build/gateway
+      args:
+        - VAULT_TOKEN=$VAULT_TOKEN
 
     depends_on:
       - pg-login
@@ -49,9 +51,11 @@ services:
       - django_log:/log
 
   pg-login:
+    build: django/build/pg-login
     container_name: transcendence_pg_login
     image: transcendence_pgbase_login
-    build: django/build/pg-login
+    networks:
+      - transcendence
     restart: always
     volumes:
       - pg-login_data:/var/lib/postgresql/data

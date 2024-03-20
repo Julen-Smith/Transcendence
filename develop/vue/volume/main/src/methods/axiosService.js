@@ -7,22 +7,6 @@ const axiosInstance = axios.create({
     //headers: {'X-Custom-Header': 'foobar'} Aqui meteremos el bearer por ejemplo
 });
 
-<<<<<<< HEAD
-
-/*
-axiosInstance.interceptors.request.use(
-    config => {
-      const token = localStorage.getItem('userToken');
-      if (token) {
-        config.headers['Authorization'] = 'Bearer ' + token;
-      }
-      return config;
-    },
-    error => {
-      return Promise.reject(error);
-    }
-  );
-=======
 //axiosInstance.interceptors.request.use(
 //    config => {
 //      const token = localStorage.getItem('userToken');
@@ -35,7 +19,6 @@ axiosInstance.interceptors.request.use(
 //      return Promise.reject(error);
 //    }
 //  );
->>>>>>> dev-lugonzal
 
 //  const isTokenExpired = (token) => {
 //    const payloadBase64 = token.split('.')[1];
@@ -50,12 +33,10 @@ axiosInstance.interceptors.request.use(
   //  alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
   //}
 
-axios.interceptors.response.use(response => response, error => {
-    if (error.response.status === 401) {
-    }
-    return Promise.reject(error);
-  });
+//axios.interceptors.response.use(response => response, error => {
+//    if (error.response.status === 401) {
+//    }
+//    return Promise.reject(error);
+//  });
 
-
-*/
 export default axiosInstance;
