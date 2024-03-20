@@ -14,14 +14,10 @@
 </template>
 
 <script>
-import { collectBrowserData } from '@/methods/api/login.js';
 
 export default {
 
-  name: 'App',
-  mounted() {
-    collectBrowserData();
-  }
+  name: 'App'
 };
 
 </script>

@@ -6,6 +6,11 @@ const axiosInstance = axios.create({
     timeout: 1000 // Timeout porsiaca ya haremos pruebas
     //headers: {'X-Custom-Header': 'foobar'} Aqui meteremos el bearer por ejemplo
 });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> cf5754d915ccf2be16a5f704600035d68600c131
 /*
 axiosInstance.interceptors.request.use(
     config => {
@@ -37,5 +42,10 @@ axios.interceptors.response.use(response => response, error => {
     }
     return Promise.reject(error);
   });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> cf5754d915ccf2be16a5f704600035d68600c131
 */
 export default axiosInstance;

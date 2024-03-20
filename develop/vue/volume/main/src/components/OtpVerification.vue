@@ -1,6 +1,6 @@
 <template>
   <div class="otp-container">
-    <form class="form" @submit.prevent="verifyCode">
+    <form class="otp" @submit.prevent="verifyCode">
       <p class="heading">Verificar</p>
       <div class="check">
         <svg class="check" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="60px" viewBox="0 0 60 60" xml:space="preserve">  <image id="image0" width="60" height="60" x="0" y="0" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAQAAACQ9RH5AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
@@ -21,13 +21,13 @@
           bWVzdGFtcAAyMDIzLTAyLTEzVDEzOjE1OjUxKzAwOjAwIIO3fQAAAABJRU5ErkJggg=="></image></svg>
       </div>
       <div class="box">
-        <input class="input" type="password" maxlength="1" v-model="otp[0]">
-        <input class="input" type="password" maxlength="1" v-model="otp[1]"> 
-        <input class="input" type="password" maxlength="1" v-model="otp[2]">
-        <input class="input" type="password" maxlength="1" v-model="otp[3]">
+        <input class="input" type="password" maxlength="1" v-model="otp[0]" @input="focusNext($event, 'input2')" ref="input1">
+        <input class="input" type="password" maxlength="1" v-model="otp[1]" @input="focusNext($event, 'input3')" ref="input2">
+        <input class="input" type="password" maxlength="1" v-model="otp[2]" @input="focusNext($event, 'input4')" ref="input3">
+        <input class="input" type="password" maxlength="1" v-model="otp[3]" ref="input4">
       </div>
+      <a v-on:click="log">No has recibido el mensaje?</a> <!--Meterle algo guay-->
       <button class="btn1">Enviar</button>
-      <button class="btn2">Regresar</button>
     </form>
   </div>
 </template>
@@ -40,11 +40,22 @@ export default {
     };
   },
   methods: {
-    verifyCode() {
-      const otpCode = this.otp.join('');
-      console.log('Verificando código:', otpCode);
-    }
+  verifyCode() {
+    const otpCode = this.otp.join('');
+    console.log('Verificando código:', otpCode);
+    if (otpCode)
+      this.$router.push("/dashboard")
+  },
+  focusNext(event, nextInputRef) {
+    if(event.target.value.length === 1 && this.$refs[nextInputRef]) {
+     this.$refs[nextInputRef].focus();
   }
+
+},
+log() {
+    console.log("No se ha recibido el mensaje");
+  }
+}
 };
 </script>
 
@@ -56,7 +67,7 @@ export default {
   height: 100vh;
 }
 
-.form {
+.otp {
   width: 300px;
   padding: 20px;
   display: flex;

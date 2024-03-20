@@ -10,11 +10,11 @@
       <form @submit.prevent="handleLogin">
         <div class="form-group">
           <label for="username">Usuario:</label>
-          <input type="text" id="username" v-model="credentials.username">
+          <input type="text" id="username" v-model="credentials.username" autocomplete="username">
         </div>
         <div class="form-group">
           <label for="password">Contraseña:</label>
-          <input type="password" id="password" v-model="credentials.password">
+          <input type="password" id="password" v-model="credentials.password" autocomplete="current-password">
         </div>
         <button type="submit">Iniciar Sesión</button>
       </form>
@@ -35,12 +35,12 @@
 
 import GoogleLogin from '@/components/GoogleLogin.vue';
 import DefaultNavbar from '@/components/DefaultNavbar.vue';
-import VueCookies from 'vue-cookies';
 import OTPVerification from '@/components/OtpVerification.vue';
 import PopUpError from '@/components/PopUpError.vue';
 import { login } from '@/methods/api/login.js';
 import { handleIntraRedirect } from '@/methods/api/login.js';
 import { ref } from 'vue';
+
 
 export default {
   name: 'LoginView',
@@ -55,20 +55,29 @@ export default {
       username: '',
       password: ''
     });
-    return { credentials , popupTriggers, errorMessage};
+    const showOTPVerification = ref(false);
+    return { credentials , popupTriggers, errorMessage, showOTPVerification };
   },
   methods: 
   {
     async handleLogin() {
-      const { success, error } = await login(this.credentials);
+      try {
+      const { success, error, status } = await login(this.credentials);
       if (!success) {
-        this.errorMessage = error;
-        this.popupTriggers.responseTrigger = true;
+        if (status == 428)
+          this.showOTPVerification = true;
+        else
+        {
+          this.errorMessage = error;
+          this.popupTriggers.responseTrigger = true;
+        }
       } else {
-        //this.showOTPVerification = true;
-        this.$router.push('/lobby');
-        VueCookies.set('session_cookie', 'futurojwt', '3600000');
+
+        this.$router.push('/dashboard');
       }
+    } catch (error) {
+    console.error('Error during login:', error);
+    }
     },
     async redirectToIntra () {
       handleIntraRedirect();
@@ -76,8 +85,6 @@ export default {
   }
 };
 
-//definir funcion y redirigir a handleintralogin() de login.js
-//def handleIntraLogin()
 
 </script>
   
@@ -144,7 +151,6 @@ button:hover
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
-  hover: 
 }
 .button_intra:hover {
   background-color: black; 

@@ -1,21 +1,8 @@
-import router from '@/router';
+//import router from '@/router';
 import axiosInstance from '../axiosService';
 //import axios from 'axios';
 
 
-// Se encarga de recoger los datos del navegador y enviarlos al servidor
-// Home View
-function collectBrowserData() {
-    const data = {
-    browserName: navigator.appName,
-    browserVersion: navigator.appVersion,
-    userAgent: navigator.userAgent,
-    language: navigator.language,
-    platform: navigator.platform,
-    screenResolution: `${screen.width}x${screen.height}`,
-  };
-  sendDataToServer(data);
-}
 
 async function postGateway(endpoint) {
   axiosInstance.post(endpoint, {timeout: 1000})
@@ -28,7 +15,6 @@ async function postGateway(endpoint) {
 }
 
 async function getGateway(endpoint) {
-
   try {
 
     const res = await axiosInstance.get(endpoint, {timeout: 1000});
@@ -38,20 +24,9 @@ async function getGateway(endpoint) {
 
       console.error("Error in GET request: ", error);
       return null;
-
   }
 }
 
-//HomeView @POST /login_log
-async function sendDataToServer(data) {
-    axiosInstance.post('/log', data,  { timeout: 5000 })
-    .then((response) => {
-      console.log('Datos enviados al servidor:', response);
-    })
-    .catch((error) => {
-      console.error('Error al enviar datos:', error);
-    });
-}
 
 //RegisterView @POST /create_user
 async function register(credentials) {
@@ -66,16 +41,19 @@ async function register(credentials) {
 
 //LoginView @POST /login_user
 async function login(credentials) {
-    try {
-        const response = await axiosInstance.post('/login/default', credentials);
-        return { success: true, data: response.data, error: null };
-
-    } catch (error) {
-        if (error.response.status == 428)
-            router.push('/otp');
-
+  try {
+      const response = await axiosInstance.post('/login/default', credentials);
+      return { success: true, data: response.data, error: null };
+  } catch (error) {
+      if (error.response) {
+        //return { success: false, data: null, error: 'Necesita verificación OTP', status: 428 };
         return { success: false, data: null, error: error.response.data.detail || 'Error desconocido.' };
-    }
+      } else {
+          console.error("Error making the request:", error);
+          return { success: false, data: null, error: 'Necesita verificación OTP', status: 428 };
+          //return { success: false, data: null, error: 'Error de red o desconocido.' };
+      }
+  }
 }
 
 async function handleIntraRedirect() {
@@ -91,5 +69,5 @@ async function handleIntraRedirect() {
 }
 
 
-export { handleIntraRedirect ,collectBrowserData , sendDataToServer, register, login,
+export { handleIntraRedirect, register, login,
   postGateway, getGateway};

@@ -1,8 +1,8 @@
 <template>
-  <div class="popup">
-    <div class="popup-inner">
+  <div v-if="isVisible" :class="{'opacity-0': !visible, 'transition-opacity duration-500': true}" class="fixed z-50" style="right: 10px; bottom: 10px;">
+    <div class="bg-black text-red-500 p-4 rounded">
       <p>{{ errorMessage }}</p>
-      <button @click="close" class="popup-close">Cerrar</button>
+      <button @click="close" class="text-white">Cerrar</button>
     </div>
   </div>
 </template>
@@ -14,35 +14,33 @@ export default {
   },
   data() {
     return {
-      isVisible: true
+      isVisible: true,
+      visible: true
     };
   },
   methods: {
     close() {
-      this.isVisible = false;
-      this.$emit('close');
+      this.visible = false;
+      setTimeout(() => {
+        this.isVisible = false;
+        this.$emit('close');
+      }, 500);
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.close();
+    }, 2000);
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.popup{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:99;
-  background-color: rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.popup-inner{
-  background: white;
-  padding: 32px;
+<!-- Puedes mantener tus estilos scoped si deseas, pero ajusta según sea necesario -->
+<style scoped>
+.popup-inner {
+  background: black;
+  color: red;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>
-  

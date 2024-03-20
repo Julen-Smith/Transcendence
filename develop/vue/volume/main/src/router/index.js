@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import LoginView from '../views/LoginView.vue';
 import LobbyView from '../views/LobbyView.vue';
@@ -11,8 +10,8 @@ import ProfileView from '@/views/ProfileView.vue';
 const routes = [
   {
     path: '/',
-    name: 'HomeView',
-    component: HomeView,
+    name: 'LandingPage',
+    component: LandingPage,
   },
   {
     path: '/Register',
@@ -33,11 +32,6 @@ const routes = [
     path: '/otp',
     name: 'OTPView',
     component: OTPView,
-  },
-  {
-    path: '/landing',
-    name: 'LandingPage',
-    component: LandingPage,
   },
   {
     path: '/dashboard',
