@@ -20,26 +20,29 @@ logger = logging.getLogger("auth")  # __name__ is a common choice
 logging.basicConfig(level="INFO")
 
 try:
-    with open("/secrets/tools_secrets.json") as fd:
-        params_tools = json.load(fd)
+    with open("/secrets/logger_secrets.json") as fd:
+        params_logger = json.load(fd)
     with open("/secrets/postgres_db_secrets.json") as fd:
         params_db = json.load(fd)
     with open("/secrets/jwt_secrets.json") as fd:
         params_jwt = json.load(fd)
-    with open("/secrets/login_secrets.json") as fd:
-        params_login = json.load(fd)
+    with open("/secrets/login_intra_secrets.json") as fd:
+        params_login_intra = json.load(fd)
+    with open("/secrets/login_google_secrets.json") as fd:
+        params_login_google = json.load(fd)
 except FileNotFoundError:
     logger.error(f"Error: Params File Not Found")
     sys.exit(1)
 
-TOOLS = params_tools["data"]["data"]
+LOGGER = params_logger["data"]["data"]
 POSTGRES = params_db["data"]["data"]
 JWT = params_jwt["data"]["data"]
-LOGIN = params_login["data"]["data"]
+LOGIN_INTRA = params_login_intra["data"]["data"]
+LOGIN_GOOGLE = params_login_google["data"]["data"]
 
 #Config with tools on vault
-TOOLS["LOGGER"]["handlers"]["file"]["filename"] = "/log/app.log"
-logging.config.dictConfig(TOOLS["LOGGER"])
+LOGGER["handlers"]["file"]["filename"] = "/log/app.log"
+logging.config.dictConfig(LOGGER)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

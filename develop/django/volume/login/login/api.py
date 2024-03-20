@@ -7,7 +7,7 @@ from ninja.errors import HttpError
 from django.conf import settings
 from django.core.cache import cache
 from . import schemas, crud, models
-from transcendence.settings import logger, LOGIN, TOOLS
+from transcendence.settings import logger, LOGIN_INTRA
 #CORE
 from django.utils import timezone
 from ninja import Router
@@ -112,9 +112,9 @@ def login_user(request, user: schemas.UserLogin): #Creacion de funcion que se ej
 @router.get('/intra')
 def redirect_intra(request): 
 
-    uid = LOGIN['INTRA_UID']
-    auth_url = LOGIN['INTRA_AUTH_URL']
-    redirect_uri = LOGIN['INTRA_REDIRECT_URI']
+    uid = LOGIN_INTRA['INTRA_UID']
+    auth_url = LOGIN_INTRA['INTRA_AUTH_URL']
+    redirect_uri = LOGIN_INTRA['INTRA_REDIRECT_URI']
 
     # Construir la URI (la f indica que esta utilizando una cadena de formato f-string en Python.Las expresiones dentro de las llaves se evalúan y se insertan en la cadena resultante.)
     uri = f"{auth_url}?client_id={uid}&redirect_uri={redirect_uri}&response_type=code"
@@ -130,10 +130,10 @@ def login_intra(request):
 
     # PASO 2 - INTERCAMBIO DE CODE POR TOKEN 
     # Construye peticion (Credenciales de enviroment, las de la app intra) 
-    uid = LOGIN['INTRA_UID']
-    secret = LOGIN['INTRA_SECRET']
-    authorization_url = LOGIN['INTRA_VERIFY_URL']
-    redirect_uri = LOGIN['INTRA_REDIRECT_URI']
+    uid = LOGIN_INTRA['INTRA_UID']
+    secret = LOGIN_INTRA['INTRA_SECRET']
+    authorization_url = LOGIN_INTRA['INTRA_VERIFY_URL']
+    redirect_uri = LOGIN_INTRA['INTRA_REDIRECT_URI']
 
     data = {
         'grant_type': 'authorization_code',
@@ -144,7 +144,7 @@ def login_intra(request):
     }
 
     #Hace un POST para intercambio por TOKEN 
-    response=requests.post(LOGIN['INTRA_VERIFY_URL'], params= data)
+    response=requests.post(LOGIN_INTRA['INTRA_VERIFY_URL'], params= data)
    
     if response.status_code != 200:
         raise HttpError(status_code=response.status_code, message="Error: Authentication code Failed")
