@@ -168,34 +168,36 @@ def login_intra(request):
     #PASO 5 - Find if user is in Database
     try:
         db_user = crud.get_user_by_email(email) 
-        if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
-            raise HttpError(status_code=404, message="Error: User already used other authentication method")
-        elif check_user(db_user):
-            handle_otp(db_user)
-            payload['url'] = TRANSCENDENCE['URL']['otp'],
-            return 428, payload
-        logger.info('EXISTING USER LOGIN OK')
-        lobby_url = 'http://localhost:8080/Lobby'
-        return {"url":lobby_url} #OK, El usuario ya existe 
+        #PASO 6a - Usuario no existe, Create user in Database
+        if db_user is None:
+            logger.info('Username does not exist, starting creation...')
+            user_create_data = {
+                "username": username,
+                "email": email,
+                "password": "IntraIntra42!", #LA ÑAPA DEL SIGLO! Que pasa con la contraseña para los usuarios que acceden por intra?  
+                "mode": 2,
+            }
+            new_user = schemas.UserCreateSchema(**user_create_data)
+            db_user = crud.create_user(user=new_user) 
+            #Handle OTP
+            #handle_otp(db_user)
+            logger.warning('NEW USER LOGIN OK')
+        #PASO 6b - Usuario existe, confirmar el modo de login
+        else:
+            if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
+                raise HttpError(status_code=404, message="Error: User already used other authentication method")
+            #Handle OTP
+            #handle_otp(db_user)
+            logger.info('EXISTING USER LOGIN OK')
+
+        payload = {
+        'url': TRANSCENDENCE['URL']['lobby'],
+        'username': username
+        }
     except Exception as err:
         logger.error(err)
 
-    #PASO 6 - Usuario no existe, Create user in Database
-    logger.info('Username does not exist, starting creation...')
-    user_create_data = {
-    "username": username,
-    "email": email,
-    "password": "IntraIntra42!", #LA ÑAPA DEL SIGLO! Que pasa con la contraseña para los usuarios que acceden por intra?  
-    "mode": 2,
-    }
-    new_user = schemas.UserCreateSchema(**user_create_data)
-    db_user = crud.create_user(user=new_user) 
-
-    #COOKIES??
-
-    logger.warning('NEW USER LOGIN OK')
-    lobby_url = 'http://localhost:8080/Lobby'
-    return {"url": lobby_url}
+    return 200, payload
      
 
 ################

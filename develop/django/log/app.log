@@ -1,7 +1,92 @@
-[INFO|autoreload|L668] 2024-03-20T17:02:02+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L668] 2024-03-20T17:03:11+0000: Watching for file changes with StatReloader
-[WARNING|settings|L125] 2024-03-20T17:14:22+0000: {'POSTGRES_DB': 'transcendence', 'POSTGRES_HOST': 'postgres', 'POSTGRES_PASSWORD': 'Tr4nsc3nd3nc3!', 'POSTGRES_USER': 'Astro98'}
-[WARNING|settings|L125] 2024-03-20T17:14:22+0000: {'POSTGRES_DB': 'transcendence', 'POSTGRES_HOST': 'postgres', 'POSTGRES_PASSWORD': 'Tr4nsc3nd3nc3!', 'POSTGRES_USER': 'Astro98'}
-[INFO|autoreload|L668] 2024-03-20T17:14:22+0000: Watching for file changes with StatReloader
-[WARNING|auth|L7] 2024-03-20T17:14:22+0000: {'ACCESS_TOKEN_EXPIRE_MINUTES': 30, 'ALGORITHM': 'HS256', 'SECRET_KEY': 'c52c0b4e6aa0ab54d16b144f9820933dba18fcca13e075cf00752725e76f9947'}
-[WARNING|api|L15] 2024-03-20T17:14:22+0000: {'GOOGLE_OAUTH': {'ACCESS_TOKEN_URL': 'https://oauth2.googleapis.com/token', 'API_URI': 'api:google-oauth2:login-raw:callback-raw', 'APP_ID': 'trancendence-411414', 'AUTH_URL': 'https://accounts.google.com/o/oauth2/auth', 'CLIENT_ID': '426246363780-ndf5bpo6l20r76008ihp9dotftuq3tpb.apps.googleusercontent.com', 'CLIENT_SECRET': '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', 'OAUTH_PARAMS_LOGIN': {'access_type': 'offline', 'client_id': '', 'include_granted_scopes': 'true', 'redirect_uri': '', 'response_type': 'code', 'scope': '', 'state': ''}, 'OAUTH_PARAMS_TOKEN': {'client_id': '', 'client_secret': '', 'code': '', 'grant_type': 'authorization_code', 'redirect_uri': ''}, 'REDIRECT_URI': 'http://trascendence.tech:4242/api/login/google/callback', 'SCOPES': ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid'], 'SCOPES_MAIL': 'https://www.googleapis.com/auth/userinfo.email', 'SCOPES_OPENID': 'openid', 'SCOPES_PROFILE': 'https://www.googleapis.com/auth/userinfo.profile', 'USER_INFO_URL': 'https://www.googleapis.com/oauth2/v3/userinfo'}, 'LOGIN_GOOGLE': {'S_LOGIN_DEFAULT_LOGIN': 'http://login:25671/api/login/default', 'S_LOGIN_GOOGLE_CALLBACK': 'http://login:25671/api/login/google/callback', 'S_LOGIN_GOOGLE_LOGIN': 'http://login:25671/api/login/google', 'S_LOGIN_REGISTER': 'http://login:25671/api/login/register'}}
+[INFO|autoreload|L266] 2024-03-20T19:43:55+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:43:55+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:43:57+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:43:58+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:00+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:00+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:02+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:03+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:05+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:05+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:07+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:07+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:14+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:14+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:18+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:18+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:51+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:51+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:54+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:54+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:44:58+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:44:58+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:03+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:03+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:05+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:06+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:08+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:08+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:12+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:13+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:41+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:42+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:54+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:54+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:45:58+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:45:58+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:03+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:03+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:05+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:05+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:08+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:08+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:10+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:10+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:12+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:13+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:15+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:15+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:20+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:20+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:46:51+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:46:51+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:47:00+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:47:00+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:47:06+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:47:07+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:47:25+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:47:26+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:47:42+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:47:43+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:47:45+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:47:45+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:47:53+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:47:54+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:00+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:00+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:03+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:03+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:11+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:12+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:14+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:14+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:23+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:23+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:30+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:30+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:32+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:32+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:35+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:35+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:41+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:42+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:48:48+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:48:48+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:49:09+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:49:09+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:49:18+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:49:18+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:50:08+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:50:08+0000: Watching for file changes with StatReloader
+[INFO|autoreload|L266] 2024-03-20T19:50:12+0000: /app/login/api.py changed, reloading.
+[INFO|autoreload|L668] 2024-03-20T19:50:13+0000: Watching for file changes with StatReloader
