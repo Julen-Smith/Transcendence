@@ -8,6 +8,5 @@ RUN apt-get update
 RUN apt-get install jq -y
 
 
-
 CMD ["/bin/bash", "-c", "npm run serve"]
 

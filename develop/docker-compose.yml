@@ -4,7 +4,7 @@ services:
     build: vue/build/main
     image: transcendence_vue_login
     expose:
-      - 8080
+      - 8080:8080
     networks:
        - transcendence
     volumes:
@@ -29,18 +29,14 @@ services:
       - django_log:/log
 
   gateway:
-  
     build:
       context: django/build/gateway
       args:
         - VAULT_TOKEN=$VAULT_TOKEN
-
     depends_on:
       - pg-login
       - login
     image: transcendence_dj_gateway
-
-
     expose:
       - 4242
 
