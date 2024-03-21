@@ -9,20 +9,27 @@ services:
       - webroot:/var/www/certbot
     entrypoint: tail -f
 
-  nginx:
-
-    build: ./nginx/build/main
-    container_name: transcendence_nginx
-    image: transcendence_nginx
-    networks:
-      - proxy
-      - develop_gateway
-    volumes:
-      - ./nginx/build/main/tools/nginx.conf:/etc/nginx/nginx.conf
-      - certs:/etc/letsencrypt
-      - webroot:/var/www/certbot
+  nginx-waf:
+    build: nginx-waf/build/main
+    container_name: transcendence_nginx_waf
+    image: transcendence_nginx_waf
+    environment:
+      - PARANOIA=1
+      - BLOCKING_PARANOIA=1
+      - ANOMALY_INBOUND=5
+      - ANOMALY_OUTBOUND=4
+      - REPORTING_LEVEL=2
     expose:
       - 80
+    networks:
+      - proxy
+      - develop_transcendence
+    volumes:
+      - ./nginx-waf/build/main/conf/before-crs.conf:/etc/modsecurity.d/owasp-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+      - ./nginx-waf/build/main/conf/after-crs.conf:/etc/modsecurity.d/owasp-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+      - ./nginx-waf/build/main/conf/default.conf:/etc/nginx/templates/conf.d/default.conf.template
+      - certs:/etc/letsencrypt
+      - webroot:/var/www/certbot
 
   haproxy:
 
@@ -72,5 +79,5 @@ volumes:
 
 networks:
   proxy:
-  develop_gateway:
+  develop_transcendence:
     external: true
