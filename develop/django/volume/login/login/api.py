@@ -7,7 +7,7 @@ from ninja.errors import HttpError
 from django.conf import settings
 from django.core.cache import cache
 from . import schemas, crud, models
-from transcendence.settings import logger, LOGIN, TOOLS
+from transcendence.settings import logger, LOGIN_INTRA, GOOGLE, TRANSCENDENCE
 #CORE
 from django.utils import timezone
 from ninja import Router
@@ -112,9 +112,9 @@ def login_user(request, user: schemas.UserLogin): #Creacion de funcion que se ej
 @router.get('/intra')
 def redirect_intra(request): 
 
-    uid = LOGIN['INTRA_UID']
-    auth_url = LOGIN['INTRA_AUTH_URL']
-    redirect_uri = LOGIN['INTRA_REDIRECT_URI']
+    uid = LOGIN_INTRA['INTRA_UID']
+    auth_url = LOGIN_INTRA['INTRA_AUTH_URL']
+    redirect_uri = LOGIN_INTRA['INTRA_REDIRECT_URI']
 
     # Construir la URI (la f indica que esta utilizando una cadena de formato f-string en Python.Las expresiones dentro de las llaves se evalúan y se insertan en la cadena resultante.)
     uri = f"{auth_url}?client_id={uid}&redirect_uri={redirect_uri}&response_type=code"
@@ -130,10 +130,10 @@ def login_intra(request):
 
     # PASO 2 - INTERCAMBIO DE CODE POR TOKEN 
     # Construye peticion (Credenciales de enviroment, las de la app intra) 
-    uid = LOGIN['INTRA_UID']
-    secret = LOGIN['INTRA_SECRET']
-    authorization_url = LOGIN['INTRA_VERIFY_URL']
-    redirect_uri = LOGIN['INTRA_REDIRECT_URI']
+    uid = LOGIN_INTRA['INTRA_UID']
+    secret = LOGIN_INTRA['INTRA_SECRET']
+    authorization_url = LOGIN_INTRA['INTRA_VERIFY_URL']
+    redirect_uri = LOGIN_INTRA['INTRA_REDIRECT_URI']
 
     data = {
         'grant_type': 'authorization_code',
@@ -144,7 +144,7 @@ def login_intra(request):
     }
 
     #Hace un POST para intercambio por TOKEN 
-    response=requests.post(LOGIN['INTRA_VERIFY_URL'], params= data)
+    response=requests.post(LOGIN_INTRA['INTRA_VERIFY_URL'], params= data)
    
     if response.status_code != 200:
         raise HttpError(status_code=response.status_code, message="Error: Authentication code Failed")
@@ -168,34 +168,36 @@ def login_intra(request):
     #PASO 5 - Find if user is in Database
     try:
         db_user = crud.get_user_by_email(email) 
-        if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
-            raise HttpError(status_code=404, message="Error: User already used other authentication method")
-        elif check_user(db_user):
-            handle_otp(db_user)
-            payload['url'] = TRANSCENDENCE['URL']['otp'],
-            return 428, payload
-        logger.info('EXISTING USER LOGIN OK')
-        lobby_url = 'http://localhost:8080/Lobby'
-        return {"url":lobby_url} #OK, El usuario ya existe 
+        #PASO 6a - Usuario no existe, Create user in Database
+        if db_user is None:
+            logger.info('Username does not exist, starting creation...')
+            user_create_data = {
+                "username": username,
+                "email": email,
+                "password": "IntraIntra42!", #LA ÑAPA DEL SIGLO! Que pasa con la contraseña para los usuarios que acceden por intra?  
+                "mode": 2,
+            }
+            new_user = schemas.UserCreateSchema(**user_create_data)
+            db_user = crud.create_user(user=new_user) 
+            #Handle OTP
+            #handle_otp(db_user)
+            logger.warning('NEW USER LOGIN OK')
+        #PASO 6b - Usuario existe, confirmar el modo de login
+        else:
+            if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
+                raise HttpError(status_code=404, message="Error: User already used other authentication method")
+            #Handle OTP
+            #handle_otp(db_user)
+            logger.info('EXISTING USER LOGIN OK')
+
+        payload = {
+        'url': TRANSCENDENCE['URL']['lobby'],
+        'username': username
+        }
     except Exception as err:
         logger.error(err)
 
-    #PASO 6 - Usuario no existe, Create user in Database
-    logger.info('Username does not exist, starting creation...')
-    user_create_data = {
-    "username": username,
-    "email": email,
-    "password": "IntraIntra42!", #LA ÑAPA DEL SIGLO! Que pasa con la contraseña para los usuarios que acceden por intra?  
-    "mode": 2,
-    }
-    new_user = schemas.UserCreateSchema(**user_create_data)
-    db_user = crud.create_user(user=new_user) 
-
-    #COOKIES??
-
-    logger.warning('NEW USER LOGIN OK')
-    lobby_url = 'http://localhost:8080/Lobby'
-    return {"url": lobby_url}
+    return 200, payload
      
 
 ################
@@ -205,13 +207,14 @@ def login_intra(request):
 @router.get('/google')
 def google_login(request, state: str):
 
-    oauth_params = GOOGLE_OUATH['OAUTH_PARAMS_LOGIN']
-    oauth_params['scope'] = ' '.join(GOOGLE_OUATH["SCOPES"])
+    logger.warning(GOOGLE)
+    oauth_params = GOOGLE['GOOGLE_OAUTH']['OAUTH_PARAMS_LOGIN']
+    oauth_params['scope'] = ' '.join(GOOGLE['GOOGLE_OAUTH']["SCOPES"])
     oauth_params['state'] = state
     oauth_params['redirect_uri'] = 'https://ikerketa.com/api/login/google/callback'#GOOGLE_OUATH['REDIRECT_URI']
-    oauth_params['client_id'] = GOOGLE_OUATH['CLIENT_ID']
+    oauth_params['client_id'] = GOOGLE['GOOGLE_OAUTH']['CLIENT_ID']
 
-    auth_url = f"{GOOGLE_OUATH['AUTH_URL']}?{urlencode(oauth_params)}"
+    auth_url = f"{GOOGLE['GOOGLE_OAUTH']['AUTH_URL']}?{urlencode(oauth_params)}"
     logger.warning(f"URL: {auth_url}")
     return {"url": auth_url}
 
@@ -226,13 +229,13 @@ def check_user(db_user: models.user_login) -> bool:
 @router.get('/google/callback', response={200: dict, 428: dict})
 def google_callback(request, code: str, state: str):
 
-    oauth_params = dict(GOOGLE_OUATH['OAUTH_PARAMS_TOKEN'])
+    oauth_params = dict(GOOGLE['GOOGLE_OAUTH']['OAUTH_PARAMS_TOKEN'])
     oauth_params['code'] = code
-    oauth_params['client_id'] = GOOGLE_OUATH['CLIENT_ID']
-    oauth_params['client_secret'] = GOOGLE_OUATH['CLIENT_SECRET']
+    oauth_params['client_id'] = GOOGLE['GOOGLE_OAUTH']['CLIENT_ID']
+    oauth_params['client_secret'] = GOOGLE['GOOGLE_OAUTH']['CLIENT_SECRET']
     oauth_params['redirect_uri'] = 'https://ikerketa.com/api/login/google/callback'#GOOGLE_OUATH['REDIRECT_URI']
 
-    res = requests.post(GOOGLE_OUATH['ACCESS_TOKEN_URL'], data=oauth_params)
+    res = requests.post(GOOGLE['GOOGLE_OAUTH']['ACCESS_TOKEN_URL'], data=oauth_params)
     if not res.ok:
         raise HttpError(status_code=res.status_code, message="Error: Authentication Failed")
 

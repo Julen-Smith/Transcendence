@@ -20,4 +20,4 @@ else
 fi
 
 
-exec python /app/manage.py runserver 0.0.0.0:$LOGIN_PORT
+exec python /app/manage.py runserver 0.0.0.0:25671
