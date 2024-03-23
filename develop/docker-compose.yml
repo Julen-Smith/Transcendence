@@ -53,13 +53,14 @@ services:
       - transcendence
     restart: always
     ports:
-        - 5432
+        - 5432:5432
     volumes:
-      - pg-login_data:/var/lib/postgresql/data
+    - pg-login_data:/var/lib/postgresql/data
     env_file:
       - .env
 
 volumes:
+  pg-login_data:
 
   gateway_data:
     driver: local
@@ -96,7 +97,7 @@ volumes:
       o: bind
       device: vue/volume/main
 
-  pg-login_data:
+  
 
 networks:
   transcendence: 
