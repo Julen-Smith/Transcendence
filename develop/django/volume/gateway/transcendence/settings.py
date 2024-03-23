@@ -122,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-logger.warning(POSTGRES)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

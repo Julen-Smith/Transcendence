@@ -12,7 +12,6 @@ from ninja.errors import HttpError
 
 router = Router()
 
-logger.warning(GOOGLE)
 S_LOGIN_REGISTER= GOOGLE["LOGIN_GOOGLE"]['S_LOGIN_REGISTER']
 S_LOGIN_DEFAULT_LOGIN= GOOGLE["LOGIN_GOOGLE"]['S_LOGIN_DEFAULT_LOGIN']
 S_LOGIN_GOOGLE_LOGIN= GOOGLE["LOGIN_GOOGLE"]['S_LOGIN_GOOGLE_LOGIN']
@@ -71,10 +70,7 @@ def login_google_callback(request, code: str, state: str, error: str | None = No
         "code": code,
         "state": state,
     }
-
-    logger.warning(f"Params: {params}")
     res = requests.get(S_LOGIN_GOOGLE_CALLBACK, params=params)
-
     try:
         info = res.json()
     except Exception as err:
@@ -157,11 +153,9 @@ def login_intra_callback(request, code:str):
     except Exception as err:
         raise HttpError(status_code=500, message="Error: Login Service Failed")
 
-    url = info.get('url')
+     # JWT, OTP y de info
 
-     # JWT, OTP y cookies
-
-    return HttpResponseRedirect(url)
+    return 200
 
 @router.post('/login/default', tags=['login'])
 def login_default(request, user: schemas.UserLogin):

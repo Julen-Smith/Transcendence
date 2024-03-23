@@ -179,15 +179,11 @@ def login_intra(request):
             }
             new_user = schemas.UserCreateSchema(**user_create_data)
             db_user = crud.create_user(user=new_user) 
-            #Handle OTP
-            #handle_otp(db_user)
             logger.warning('NEW USER LOGIN OK')
         #PASO 6b - Usuario existe, confirmar el modo de login
         else:
             if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
                 raise HttpError(status_code=404, message="Error: User already used other authentication method")
-            #Handle OTP
-            #handle_otp(db_user)
             logger.info('EXISTING USER LOGIN OK')
 
         payload = {

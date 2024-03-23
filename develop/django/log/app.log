@@ -1,92 +1,33 @@
-[INFO|autoreload|L266] 2024-03-20T19:43:55+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:43:55+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:43:57+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:43:58+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:00+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:00+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:02+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:03+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:05+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:05+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:07+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:07+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:14+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:14+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:18+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:18+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:51+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:51+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:54+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:54+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:44:58+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:44:58+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:03+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:03+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:05+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:06+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:08+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:08+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:12+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:13+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:41+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:42+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:54+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:54+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:45:58+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:45:58+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:03+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:03+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:05+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:05+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:08+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:08+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:10+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:10+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:12+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:13+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:15+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:15+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:20+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:20+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:46:51+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:46:51+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:47:00+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:47:00+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:47:06+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:47:07+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:47:25+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:47:26+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:47:42+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:47:43+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:47:45+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:47:45+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:47:53+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:47:54+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:00+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:00+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:03+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:03+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:11+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:12+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:14+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:14+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:23+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:23+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:30+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:30+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:32+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:32+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:35+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:35+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:41+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:42+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:48:48+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:48:48+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:49:09+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:49:09+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:49:18+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:49:18+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:50:08+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:50:08+0000: Watching for file changes with StatReloader
-[INFO|autoreload|L266] 2024-03-20T19:50:12+0000: /app/login/api.py changed, reloading.
-[INFO|autoreload|L668] 2024-03-20T19:50:13+0000: Watching for file changes with StatReloader
+[DEBUG|connectionpool|L1055] 2024-03-23T13:17:12+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:17:12+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:17:12+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:17:12+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:17:12+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:17:12+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:17:12+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:17:12+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:17:12+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:17:12+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:17:12+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:17:12+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:17:59+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:17:59+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:17:59+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:18:04+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:18:04+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:18:04+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:18:24+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:18:24+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:18:24+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:19:15+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:19:15+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:19:15+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:19:15+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:19:15+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:19:15+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:19:41+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:19:41+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:19:41+0000: Unauthorized: /api/login/intra/callback
+[DEBUG|connectionpool|L1055] 2024-03-23T13:19:41+0000: Starting new HTTPS connection (1): api.intra.42.fr:443
+[DEBUG|connectionpool|L549] 2024-03-23T13:19:41+0000: https://api.intra.42.fr:443 "POST /oauth/token?grant_type=authorization_code&client_id=u-s4t2ud-6b7efca18b23485e50a6d9bc6df43ecc1024f25f5cf92dc6fd473fcc8647e21c&client_secret=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&code=53463545346&redirect_uri=http%3A%2F%2Ftrascendence.tech%3A4242%2Fapi%2Flogin%2Fintra_callback HTTP/1.1" 401 None
+[WARNING|log|L241] 2024-03-23T13:19:41+0000: Unauthorized: /api/login/intra/callback
