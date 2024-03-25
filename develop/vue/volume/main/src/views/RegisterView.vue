@@ -30,6 +30,7 @@
       <div>
       <button class="button_intra" @click="redirectToIntra">Registrarse con Intra 42</button>
       </div>
+      <GoogleLogin buttonText="Register with Google"></GoogleLogin>
     </div>
   </div>
 
@@ -37,6 +38,7 @@
   
 <script>
 
+import GoogleLogin from '@/components/GoogleLogin.vue';
 import DefaultNavbar from '@/components/DefaultNavbar.vue';
 import PopUpError from '../components/PopUpError.vue';
 import { ref, computed } from 'vue';
@@ -45,7 +47,7 @@ import { handleIntraRedirect } from '@/methods/api/login.js';
 
   export default {
   name: 'RegisterView',
-  components: { DefaultNavbar, PopUpError },
+  components: { DefaultNavbar, PopUpError, GoogleLogin},
   setup() {
     const errorMessage = ref('');
     const popupTriggers = ref({

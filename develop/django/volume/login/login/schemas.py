@@ -58,7 +58,7 @@ class UserReturnSchema(ModelSchema):
     class Meta:
 
         model = models.user_login
-        fields = ['username']
+        fields = ['id', 'username']
 
 class LoginLogSchema(Schema):
     browserName: str

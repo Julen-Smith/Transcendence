@@ -1,0 +1,8 @@
+Django==5.0.1
+django-ninja==1.1.0 
+psycopg2==2.9.9 
+PyJWT==2.8.0
+aiohttp==3.9.3 
+requests==2.31.0
+django-extensions==3.2.3
+django-cors-headers==4.3.1

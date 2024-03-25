@@ -10,10 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import json, logging.config, sys
 from pathlib import Path
 
-import pathlib, os, sys, json, aiohttp
-import logging.config
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-wm_pyx_6%^*5=8chz8e+ffl@58s_!*$j@)moeyh9j74c4jv3gv'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
 
 logger = logging.getLogger("auth")  # __name__ is a common choice
 
@@ -24,47 +36,23 @@ try:
         params_logger = json.load(fd)
     with open("/secrets/postgres_db_secrets.json") as fd:
         params_db = json.load(fd)
-    with open("/secrets/jwt_secrets.json") as fd:
-        params_jwt = json.load(fd)
-    with open("/secrets/login_google_secrets.json") as fd:
-        params_google_login = json.load(fd)
-    with open("/secrets/login_intra_secrets.json") as fd:
-        params_intra_login = json.load(fd)
 except FileNotFoundError as err:
     logger.error(f"Error: Params File Not Found {err}")
     sys.exit(1)
 
-
 LOGGER = params_logger["data"]["data"]
 POSTGRES = params_db["data"]["data"]
-JWT = params_jwt["data"]["data"]
-GOOGLE = params_google_login["data"]["data"]
-INTRA = params_intra_login["data"]["data"]
 
-#Config with tools on vault
-LOGGER["handlers"]["file"]["filename"] = "/log/app.log"
+LOGGER["handlers"]["file"]["filename"] = "/log/user.log"
 logging.config.dictConfig(LOGGER)
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%fmk_ra(3@i6m+cto&6b$&5m!x)%1eyp#qrku=_6&*@w9a)@j='
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['ikerketa.com', 'www.ikerketa.com','65.109.174.85','195.35.48.173','auth', 'localhost', 'login', 'https://localhost', 'trascendence.tech', 'gateway']
+ALLOWED_HOSTS = ['user']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders',
+    'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,7 +63,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -105,6 +92,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'transcendence.wsgi.application'
 
 
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': POSTGRES['POSTGRES_DB'],
+        'HOST': POSTGRES['POSTGRES_HOST'],
+        'USER': POSTGRES['POSTGRES_USER'],
+        'PASSWORD': POSTGRES['POSTGRES_PASSWORD']
+    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -122,16 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': POSTGRES['POSTGRES_DB'],
-        'HOST': POSTGRES['POSTGRES_HOST'],
-        'USER': POSTGRES['POSTGRES_USER'],
-        'PASSWORD': POSTGRES['POSTGRES_PASSWORD']
-    }
-}
 
 
 # Internationalization
@@ -155,19 +145,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOWED_ORIGINS = [
-    "http://65.109.174.85:8080",
-    "http://65.109.174.85:25671",
-    "http://65.109.174.85",
-    "http://trascendence.tech",
-    "https://trascendence.tech",
-    "http://localhost:8080",
-    "https://localhost:8080",
-    "http://localhost:25671",
-    "https://localhost:25671",
-    "http://localhost",
-    "https://localhost"
-]
-
-CORS_ALLOW_CREDENTIALS = True

@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password
 from . import schemas, models
 from .models import user_login
 from transcendence.settings import logger
-from django.core.exceptions import ObjectDoesNotExist , MultipleObjectsReturned
+from django.core.exceptions import MultipleObjectsReturned
 
 def create_user(user: schemas.UserCreateSchema) -> models.user_login:
     try:

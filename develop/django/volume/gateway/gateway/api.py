@@ -82,11 +82,12 @@ def login_google_callback(request, code: str, state: str, error: str | None = No
 
     url = info.get('url')
     username = info.get('username')
+    user_id = info.get('user_id')
 
     #HANDLE OTP
     logger.warning(f"EMAIL: {username}")
     logger.warning(info)
-    jwt_input = auth.create_jwt(username=username)
+    jwt_input = auth.create_jwt(username=username, user_id=user_id)
 
     if not res.ok:
         jwt_input.permission = 0
@@ -184,6 +185,7 @@ def login_register(request, user: schemas.UserRegister):
         'mode': 0
     }
 
+    logger.warning(S_LOGIN_REGISTER)
     res = requests.post(S_LOGIN_REGISTER, json=payload)
 
     if not res.ok:
@@ -201,3 +203,46 @@ def login_unknown(request, username: str):
 @router.get("/middleware", auth=auth.authorize)
 def test_middleware(request):
     return {"msg": 1}
+
+#USER
+
+@router.post('/user/add/friend', auth=auth.authorize, tags=['user'])
+def add_friend(request, friendname: str):
+
+    payload = {
+        'user_id': request.jwt_data.get('user_id'),
+        'friendname': friendname
+    }
+
+    logger.warning(payload)
+    res = requests.post('http://user:22748/api/user/add/friend', params=payload)
+
+    if not res.ok:
+        logger.error(res.json())
+        raise HttpError(message='Error: Adding Friend', status_code=res.status_code)
+
+    logger.warning(f"JWT DATA: {request.jwt_data}")
+    return {"msg": 1}
+
+@router.delete('/user/delete/friend', auth=auth.authorize, tags=['user'])
+def add_friend(request, friendname: str):
+
+    payload = {
+        'user_id': request.jwt_data.get('user_id'),
+        'friendname': friendname
+    }
+
+    logger.warning(payload)
+    res = requests.delete('http://user:22748/api/user/delete/friend', params=payload)
+
+    if not res.ok:
+        logger.error(res.json())
+        raise HttpError(message='Error: Deleting Friend', status_code=res.status_code)
+
+    return {"msg": 1}
+
+@router.delete('/delete/lukas')
+def delete_lukas(request):
+
+    requests.delete('http://user:22748/api/user/delete/lukas')
+    return {'msg': 1}

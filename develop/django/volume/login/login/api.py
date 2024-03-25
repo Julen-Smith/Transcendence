@@ -256,7 +256,8 @@ def google_callback(request, code: str, state: str):
 
     payload = {
         'url': TRANSCENDENCE['URL']['lobby'],
-        'username': username
+        'username': username,
+        'user_id': None
     }
 
     if db_user is None:
@@ -269,16 +270,23 @@ def google_callback(request, code: str, state: str):
                 mode=TRANSCENDENCE['LOGIN']['GOOGLE']
             )
             db_user = crud.create_user(new_user)
+            payload['user_id'] = db_user.id
+
         except Exception as err:
             logger.error(err)
 
         logger.warning(f"DB_USER: {db_user}")
 
     elif check_user(db_user):
+        payload['user_id'] = db_user.id
         handle_otp(db_user)
         payload['url'] = TRANSCENDENCE['URL']['otp'],
+        logger.warning(payload)
         return 428, payload
+    else:
+        payload['user_id'] = db_user.id
 
+    logger.warning(payload)
     return 200, payload
 
 @router.post('/test/otp')
@@ -290,17 +298,3 @@ def test_otp(request, receiver: str):
     retval = handle_otp(db_user)
 
     return {"status": retval}
-
-
-@router.post('/create/list')
-def create_list(request, users: List[schemas.UserCreateSchema]):
-
-    created = 0
-    for user in users:
-        try:
-            crud.create_user(user)
-            created += 1
-        except Exception as err:
-            logger.warning(f"User creation failed: {err}")
-
-    return {"message": f"Users created: {created}"}

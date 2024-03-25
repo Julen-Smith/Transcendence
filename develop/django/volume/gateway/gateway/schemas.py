@@ -1,7 +1,4 @@
-from ninja.errors import HttpError
-from django.core.validators import validate_email
 from ninja import Schema, Field
-from pydantic import validator
 
 ###############
 # JWT Achemas #
@@ -9,6 +6,7 @@ from pydantic import validator
 
 class JWTInput(Schema):
     username: str = Field(max_length=32, examples=["lugonzal"])
+    user_id: int = Field()
     expire_time: int = Field(ge=5, default=30)
     permission: int = Field(default=1)
 

@@ -17,6 +17,7 @@ def encode_token(jwt_input: schemas.JWTInput) -> str:
 
     payload = {
         "username": jwt_input.username,
+        'user_id': jwt_input.user_id,
         "exp": exp_date
     }
 
@@ -38,17 +39,23 @@ def decode_token(token: str) -> dict:
     except Exception as err:
         raise HttpError(status_code=401, message="Error: Unhandled Error")
 
-    email = decode_token.get("email")
-    if email is None or not validate_email(email):
+    logger.warning(f"Decoded: {decoded}")
+    email = decoded.get("username")
+    if email is None:
         raise HttpError(status_code=401, message="Error: User Unauthorized")
 
     if decoded.get("exp") is None:
         raise HttpError(status_code=401, message="Error: No Time Expedition")
+
+    user_id = decoded.get("user_id")
+    if user_id is None:
+        raise HttpError(status_code=401, message="Error: no user id")
+
     return decoded
 
-def create_jwt(username: str):
+def create_jwt(username: str, user_id: int):
 
-    jwt_input = schemas.JWTInput(username=username)
+    jwt_input = schemas.JWTInput(username=username, user_id=user_id)
 
     #TOKEN
     token = encode_token(jwt_input)
@@ -87,5 +94,7 @@ def authorize(request):
     if auth is None:
         raise HttpError(status_code=403, message="Error: Unauthorized")
 
-    decode_token(auth)
+    jwt_data = decode_token(auth)
+    request.jwt_data = jwt_data
+
     return request

@@ -31,6 +31,8 @@ async function getGateway(endpoint) {
 //RegisterView @POST /create_user
 async function register(credentials) {
     try {
+        console.log("login/register");
+        console.log("Credentials: ", credentials);
         const response = await axiosInstance.post('/login/register', credentials);
         return { success: true, data: response.data, error: null };
 
