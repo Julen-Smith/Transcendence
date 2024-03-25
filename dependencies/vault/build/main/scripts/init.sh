@@ -10,13 +10,17 @@ while [ $retval -ne 0 ]; do
     
 done
 
+i=0
 vault operator init | while IFS= read -r line
 do
 
     echo "$line" | grep "Unseal Key"
     if [ $? -eq 0 ]; then
 
-        vault operator unseal $(echo $line | awk '{ print $4 }')
+        unseal_key=$(echo $line | awk '{ print $4 }')
+        vault operator unseal $unseal_key
+        i=$(($i+1))
+        echo $unseal_key > ./unseal_key_$i
 
     else
 
@@ -27,7 +31,7 @@ do
             export VAULT_TOKEN=$root_token
             vault login $root_token
             vault secrets enable kv
-            echo $root_token > root_token.txt
+            echo $root_token > ./root_token.txt
             break
 
         fi

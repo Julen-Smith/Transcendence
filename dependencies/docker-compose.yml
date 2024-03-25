@@ -1,14 +1,5 @@
 services:
 
-  certbot:
-    build: certbot/build/main
-    container_name: transcendence_certbot
-    image: transcendence_certbot
-    volumes:
-      - certs:/etc/letsencrypt
-      - webroot:/var/www/certbot
-    entrypoint: tail -f
-
   nginx-waf:
     build: nginx-waf/build/main
     container_name: transcendence_nginx_waf
@@ -24,12 +15,11 @@ services:
     networks:
       - proxy
       - develop_transcendence
+      - devops_monitor
     volumes:
       - ./nginx-waf/build/main/conf/before-crs.conf:/etc/modsecurity.d/owasp-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
       - ./nginx-waf/build/main/conf/after-crs.conf:/etc/modsecurity.d/owasp-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
       - ./nginx-waf/build/main/conf/default.conf:/etc/nginx/templates/conf.d/default.conf.template
-      - certs:/etc/letsencrypt
-      - webroot:/var/www/certbot
 
   haproxy:
 
@@ -39,11 +29,11 @@ services:
 
     networks:
       - proxy
+      - devops_monitor
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./haproxy/build/main/tools/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
       - certs:/etc/certs
 
   vault:
@@ -56,6 +46,8 @@ services:
     env_file:
       - .envs/.env.vault
     image: transcendence_vault
+    networks:
+      - develop_transcendence
     ports:
       - 8200:8200
     restart: always
@@ -67,6 +59,8 @@ services:
     env_file:
       - .envs/.env.vault
 
+    networks:
+      - develop_transcendence
     restart: always  
     volumes:
       - pg_vault:/var/lib/postgresql/data
@@ -80,4 +74,7 @@ volumes:
 networks:
   proxy:
   develop_transcendence:
+    external: true
+
+  devops_monitor:
     external: true
