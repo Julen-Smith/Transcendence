@@ -3,10 +3,10 @@ services:
   vue:
     build: vue/build/main
     image: transcendence_vue_login
-    expose:
-      - 8080
+    ports:
+      - 8080:8080
     networks:
-       - transcendence
+      - transcendence
     volumes:
       - vue_data:/Trascendence
       - vue_log:/Logs
@@ -36,13 +36,16 @@ services:
       context: django/build/login
       args:
         - VAULT_TOKEN=$VAULT_TOKEN
+<<<<<<< HEAD
 
     container_name: transcendence_dj_login
+=======
+>>>>>>> 905dfdaa6a1b5771eaad8c6452d378c6dcf2ff29
     depends_on:
       - pg-login
     image: transcendence_dj_login
-    expose:
-        - 25671
+    ports:
+        - 25671:25671
     networks:
       - transcendence
     volumes:
@@ -50,20 +53,27 @@ services:
       - django_log:/log
 
   gateway:
-  
     build:
       context: django/build/gateway
       args:
         - VAULT_TOKEN=$VAULT_TOKEN
+<<<<<<< HEAD
     container_name: transcendence_dj_gateway
 
+=======
+>>>>>>> 905dfdaa6a1b5771eaad8c6452d378c6dcf2ff29
     depends_on:
       - pg-login
       - login
     image: transcendence_dj_gateway
+<<<<<<< HEAD
 
     expose:
       - 4242
+=======
+    ports:
+      - 4242:4242
+>>>>>>> 905dfdaa6a1b5771eaad8c6452d378c6dcf2ff29
 
     networks:
       - transcendence
@@ -78,10 +88,15 @@ services:
     networks:
       - transcendence
     restart: always
+    ports:
+        - 5432:5432
     volumes:
-      - pg-login_data:/var/lib/postgresql/data
+    - pg-login_data:/var/lib/postgresql/data
+    env_file:
+      - .env
 
 volumes:
+  pg-login_data:
 
   user_data:
     driver: local
@@ -125,7 +140,7 @@ volumes:
       o: bind
       device: vue/volume/main
 
-  pg-login_data:
+  
 
 networks:
   transcendence: 

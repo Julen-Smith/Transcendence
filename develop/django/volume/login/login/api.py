@@ -7,7 +7,7 @@ from ninja.errors import HttpError
 from django.conf import settings
 from django.core.cache import cache
 from . import schemas, crud, models
-from transcendence.settings import logger, INTRA, GOOGLE, TRANSCENDENCE
+from transcendence.settings import logger, LOGIN_INTRA, GOOGLE, TRANSCENDENCE
 #CORE
 from django.utils import timezone
 from ninja import Router
@@ -112,9 +112,9 @@ def login_user(request, user: schemas.UserLogin): #Creacion de funcion que se ej
 @router.get('/intra')
 def redirect_intra(request): 
 
-    uid = LOGIN['INTRA_UID']
-    auth_url = LOGIN['INTRA_AUTH_URL']
-    redirect_uri = LOGIN['INTRA_REDIRECT_URI']
+    uid = LOGIN_INTRA['INTRA_UID']
+    auth_url = LOGIN_INTRA['INTRA_AUTH_URL']
+    redirect_uri = LOGIN_INTRA['INTRA_REDIRECT_URI']
 
     # Construir la URI (la f indica que esta utilizando una cadena de formato f-string en Python.Las expresiones dentro de las llaves se evalúan y se insertan en la cadena resultante.)
     uri = f"{auth_url}?client_id={uid}&redirect_uri={redirect_uri}&response_type=code"
@@ -130,10 +130,10 @@ def login_intra(request):
 
     # PASO 2 - INTERCAMBIO DE CODE POR TOKEN 
     # Construye peticion (Credenciales de enviroment, las de la app intra) 
-    uid = LOGIN['INTRA_UID']
-    secret = LOGIN['INTRA_SECRET']
-    authorization_url = LOGIN['INTRA_VERIFY_URL']
-    redirect_uri = LOGIN['INTRA_REDIRECT_URI']
+    uid = LOGIN_INTRA['INTRA_UID']
+    secret = LOGIN_INTRA['INTRA_SECRET']
+    authorization_url = LOGIN_INTRA['INTRA_VERIFY_URL']
+    redirect_uri = LOGIN_INTRA['INTRA_REDIRECT_URI']
 
     data = {
         'grant_type': 'authorization_code',
@@ -144,7 +144,7 @@ def login_intra(request):
     }
 
     #Hace un POST para intercambio por TOKEN 
-    response=requests.post(LOGIN['INTRA_VERIFY_URL'], params= data)
+    response=requests.post(LOGIN_INTRA['INTRA_VERIFY_URL'], params= data)
    
     if response.status_code != 200:
         raise HttpError(status_code=response.status_code, message="Error: Authentication code Failed")
@@ -168,34 +168,32 @@ def login_intra(request):
     #PASO 5 - Find if user is in Database
     try:
         db_user = crud.get_user_by_email(email) 
-        if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
-            raise HttpError(status_code=404, message="Error: User already used other authentication method")
-        elif check_user(db_user):
-            handle_otp(db_user)
-            payload['url'] = TRANSCENDENCE['URL']['otp'],
-            return 428, payload
-        logger.info('EXISTING USER LOGIN OK')
-        lobby_url = 'http://localhost:8080/Lobby'
-        return {"url":lobby_url} #OK, El usuario ya existe 
+        #PASO 6a - Usuario no existe, Create user in Database
+        if db_user is None:
+            logger.info('Username does not exist, starting creation...')
+            user_create_data = {
+                "username": username,
+                "email": email,
+                "password": "IntraIntra42!", #LA ÑAPA DEL SIGLO! Que pasa con la contraseña para los usuarios que acceden por intra?  
+                "mode": 2,
+            }
+            new_user = schemas.UserCreateSchema(**user_create_data)
+            db_user = crud.create_user(user=new_user) 
+            logger.warning('NEW USER LOGIN OK')
+        #PASO 6b - Usuario existe, confirmar el modo de login
+        else:
+            if db_user.mode != 2: #se puede implementar como variable LOGIN MODE INTRA = 2 
+                raise HttpError(status_code=404, message="Error: User already used other authentication method")
+            logger.info('EXISTING USER LOGIN OK')
+
+        payload = {
+        'url': TRANSCENDENCE['URL']['lobby'],
+        'username': username
+        }
     except Exception as err:
         logger.error(err)
 
-    #PASO 6 - Usuario no existe, Create user in Database
-    logger.info('Username does not exist, starting creation...')
-    user_create_data = {
-    "username": username,
-    "email": email,
-    "password": "IntraIntra42!", #LA ÑAPA DEL SIGLO! Que pasa con la contraseña para los usuarios que acceden por intra?  
-    "mode": 2,
-    }
-    new_user = schemas.UserCreateSchema(**user_create_data)
-    db_user = crud.create_user(user=new_user) 
-
-    #COOKIES??
-
-    logger.warning('NEW USER LOGIN OK')
-    lobby_url = 'http://localhost:8080/Lobby'
-    return {"url": lobby_url}
+    return 200, payload
      
 
 ################

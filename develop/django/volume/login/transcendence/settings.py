@@ -21,12 +21,10 @@ logging.basicConfig(level="INFO")
 
 try:
     with open("/secrets/login_intra_secrets.json") as fd:
-        params_intra_login = json.load(fd)
-    with open("/secrets/login_google_secrets.json") as fd:
-        params_google_login = json.load(fd)
+        params_login_intra = json.load(fd)
     with open("/secrets/login_google_secrets.json") as fd:
         params_login_google = json.load(fd)
-    with open("/secrets/server.json") as fd:
+    with open("/secrets/server_secrets.json") as fd:
         params_server = json.load(fd)
     with open("/secrets/logger_secrets.json") as fd:
         params_logger = json.load(fd)
@@ -37,8 +35,8 @@ except FileNotFoundError as err:
     sys.exit(1)
 
 LOGGER = params_logger["data"]["data"]
-INTRA = params_intra_login["data"]["data"]
-GOOGLE = params_google_login["data"]["data"]
+LOGIN_INTRA = params_login_intra["data"]["data"]
+GOOGLE = params_login_google["data"]["data"] #CAMBIAR A LOGIN_GOOGLE
 TRANSCENDENCE = params_server["data"]["data"]
 POSTGRES = params_db["data"]["data"]
 logger.warning(POSTGRES)

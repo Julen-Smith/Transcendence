@@ -27,19 +27,18 @@ try:
     with open("/secrets/jwt_secrets.json") as fd:
         params_jwt = json.load(fd)
     with open("/secrets/login_google_secrets.json") as fd:
-        params_google_login = json.load(fd)
+        params_login_google = json.load(fd)
     with open("/secrets/login_intra_secrets.json") as fd:
-        params_intra_login = json.load(fd)
+        params_login_intra = json.load(fd)
 except FileNotFoundError as err:
     logger.error(f"Error: Params File Not Found {err}")
     sys.exit(1)
 
-
 LOGGER = params_logger["data"]["data"]
 POSTGRES = params_db["data"]["data"]
 JWT = params_jwt["data"]["data"]
-GOOGLE = params_google_login["data"]["data"]
-INTRA = params_intra_login["data"]["data"]
+GOOGLE = params_login_google["data"]["data"] #CAMBIAR A LOGIN_GOOGLE
+LOGIN_INTRA = params_login_intra["data"]["data"]
 
 #Config with tools on vault
 LOGGER["handlers"]["file"]["filename"] = "/log/app.log"
