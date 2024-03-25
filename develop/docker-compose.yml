@@ -36,11 +36,7 @@ services:
       context: django/build/login
       args:
         - VAULT_TOKEN=$VAULT_TOKEN
-<<<<<<< HEAD
-
     container_name: transcendence_dj_login
-=======
->>>>>>> 905dfdaa6a1b5771eaad8c6452d378c6dcf2ff29
     depends_on:
       - pg-login
     image: transcendence_dj_login
@@ -57,24 +53,14 @@ services:
       context: django/build/gateway
       args:
         - VAULT_TOKEN=$VAULT_TOKEN
-<<<<<<< HEAD
     container_name: transcendence_dj_gateway
-
-=======
->>>>>>> 905dfdaa6a1b5771eaad8c6452d378c6dcf2ff29
     depends_on:
       - pg-login
       - login
     image: transcendence_dj_gateway
-<<<<<<< HEAD
 
     expose:
       - 4242
-=======
-    ports:
-      - 4242:4242
->>>>>>> 905dfdaa6a1b5771eaad8c6452d378c6dcf2ff29
-
     networks:
       - transcendence
     volumes:
