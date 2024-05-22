@@ -1,0 +1,88 @@
+name: Dependencies Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      main_option:
+        description: 'Choose the main command category'
+        required: true
+        default: 'Vault'
+        type: choice
+        options:
+          - Vault
+          - Nginx
+          - Haproxy
+      sub_option:
+        description: 'Choose the specific command to run within the category'
+        required: true
+        default: 'Introduce new secret'
+        type: choice
+        options:
+          - Re-send Vault Secrets
+          - Restart Vault
+          - Introduce new secret
+
+jobs:
+  ssh-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Run SSH commands
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
+          echo "Conectado exitosamente"
+          main_option="${{ github.event.inputs.main_option }}"
+          sub_option="${{ github.event.inputs.sub_option }}"
+
+          case "$main_option" in
+            category1)
+              case "$sub_option" in
+                option1)
+                  echo "Ejecutando comandos para category1, opción 1"
+                  # Comandos para category1, opción 1
+                  uname -a
+                  ;;
+                option2)
+                  echo "Ejecutando comandos para category1, opción 2"
+                  # Comandos para category1, opción 2
+                  df -h
+                  ;;
+                option3)
+                  echo "Ejecutando comandos para category1, opción 3"
+                  # Comandos para category1, opción 3
+                  uptime
+                  ;;
+              esac
+              ;;
+            category2)
+              case "$sub_option" in
+                option1)
+                  echo "Ejecutando comandos para category2, opción 1"
+                  # Comandos para category2, opción 1
+                  whoami
+                  ;;
+                option2)
+                  echo "Ejecutando comandos para category2, opción 2"
+                  # Comandos para category2, opción 2
+                  free -m
+                  ;;
+                option3)
+                  echo "Ejecutando comandos para category2, opción 3"
+                  # Comandos para category2, opción 3
+                  top -b -n 1
+                  ;;
+              esac
+              ;;
+            *)
+              echo "Opción principal no válida"
+              ;;
+          esac
+        EOF
