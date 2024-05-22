@@ -12,77 +12,49 @@ on:
           - Vault
           - Nginx
           - Haproxy
-      sub_option:
-        description: 'Choose the specific command to run within the category'
-        required: true
-        default: 'Introduce new secret'
+          - Email
+      vault_sub_option:
+        description: 'Choose the specific Vault command'
+        required: false
         type: choice
         options:
-          - Re-send Vault Secrets
-          - Restart Vault
-          - Introduce new secret
+          - Get Unseal Keys
+          - Restart Vault (Existing secrets K.O)
+          - Introduce new secret/s
+          - Get Secret Backup
+      email_sub_option:
+        description: 'Choose the specific Email command'
+        required: false
+        type: choice
+        options:
+          - Send Email
+          - Check Email Status
 
 jobs:
-  ssh-run:
+  handle-vault:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.inputs.main_option == 'Vault' }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Vault command selected
+        run: echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
 
-    - name: Set up SSH agent
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  handle-email:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.main_option == 'Email' }}
+    steps:
+      - name: Email command selected
+        run: echo "Email command: ${{ github.event.inputs.email_sub_option }}"
 
-    - name: Run SSH commands
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
-          echo "Conectado exitosamente"
-          main_option="${{ github.event.inputs.main_option }}"
-          sub_option="${{ github.event.inputs.sub_option }}"
+  handle-nginx:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.main_option == 'Nginx' }}
+    steps:
+      - name: Nginx command selected
+        run: echo "Nginx command selected"
 
-          case "$main_option" in
-            category1)
-              case "$sub_option" in
-                option1)
-                  echo "Ejecutando comandos para category1, opción 1"
-                  # Comandos para category1, opción 1
-                  uname -a
-                  ;;
-                option2)
-                  echo "Ejecutando comandos para category1, opción 2"
-                  # Comandos para category1, opción 2
-                  df -h
-                  ;;
-                option3)
-                  echo "Ejecutando comandos para category1, opción 3"
-                  # Comandos para category1, opción 3
-                  uptime
-                  ;;
-              esac
-              ;;
-            category2)
-              case "$sub_option" in
-                option1)
-                  echo "Ejecutando comandos para category2, opción 1"
-                  # Comandos para category2, opción 1
-                  whoami
-                  ;;
-                option2)
-                  echo "Ejecutando comandos para category2, opción 2"
-                  # Comandos para category2, opción 2
-                  free -m
-                  ;;
-                option3)
-                  echo "Ejecutando comandos para category2, opción 3"
-                  # Comandos para category2, opción 3
-                  top -b -n 1
-                  ;;
-              esac
-              ;;
-            *)
-              echo "Opción principal no válida"
-              ;;
-          esac
-        EOF
+  handle-haproxy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.main_option == 'Haproxy' }}
+    steps:
+      - name: Haproxy command selected
+        run: echo "Haproxy command selected"
