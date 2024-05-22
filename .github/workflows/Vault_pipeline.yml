@@ -18,4 +18,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Vault command selected
-        run: echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
+        run: |
+        echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
