@@ -6,7 +6,6 @@ on:
       main_option:
         description: 'Choose the main command category'
         required: true
-        default: 'Vault'
         type: choice
         options:
           - Vault
@@ -29,6 +28,11 @@ on:
         options:
           - Send Email
           - Check Email Status
+      branch:
+        description: 'Select the branch to run the workflow on'
+        required: true
+        type: environment
+        default: 'main'
 
 jobs:
   handle-vault:
@@ -36,13 +40,11 @@ jobs:
     if: ${{ github.event.inputs.main_option == 'Vault' }}
     steps:
       - name: Vault command selected
-        run: | 
-        echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
+        run: echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
 
   handle-email:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.main_option == 'Email' }}
     steps:
       - name: Email command selected
-        run: |
-        echo "Email command: ${{ github.event.inputs.email_sub_option }}"
+        run: echo "Email command: ${{ github.event.inputs.email_sub_option }}"
