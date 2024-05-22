@@ -36,44 +36,12 @@ jobs:
     if: ${{ github.event.inputs.main_option == 'Vault' }}
     steps:
       - name: Vault command selected
-        run: echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
+        run: | echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
 
   handle-email:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.main_option == 'Email' }}
     steps:
       - name: Email command selected
-        run: echo "Email command: ${{ github.event.inputs.email_sub_option }}"
-
-  handle-nginx:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.main_option == 'Nginx' }}
-    steps:
-      - name: Nginx command selected
-        run: echo "Nginx command selected"
-
-  handle-haproxy:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.main_option == 'Haproxy' }}
-    steps:
-      - name: Haproxy command selected
-        run: echo "Haproxy command selected"
-
-  ssh-run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Run SSH commands
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
-            echo "Conectado exitosamente"
-            main_option="${{ github.event.inputs.main_option }}"
-            sub_option="${{ github.event.inputs.sub_option }}"
-          EOF
+        echo "Email command: ${{ github.event.inputs.email_sub_option }}"
