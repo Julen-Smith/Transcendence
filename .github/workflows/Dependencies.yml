@@ -20,8 +20,8 @@ on:
         options:
           - Get Unseal Keys
           - Restart Vault (Existing secrets K.O)
-          - Introduce new secret/s
-          - Get Secret Backup
+          - Introduce new secret
+          - Get Secrets
       email_sub_option:
         description: 'Choose the specific Email command'
         required: false
@@ -58,3 +58,23 @@ jobs:
     steps:
       - name: Haproxy command selected
         run: echo "Haproxy command selected"
+
+  ssh-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Run SSH commands
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
+          echo "Conectado exitosamente"
+          main_option="${{ github.event.inputs.main_option }}"
+          sub_option="${{ github.event.inputs.sub_option }}"
+        EOF
