@@ -61,20 +61,19 @@ jobs:
 
   ssh-run:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up SSH agent
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Run SSH commands
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
-          echo "Conectado exitosamente"
-          main_option="${{ github.event.inputs.main_option }}"
-          sub_option="${{ github.event.inputs.sub_option }}"
-        EOF
+      - name: Run SSH commands
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
+            echo "Conectado exitosamente"
+            main_option="${{ github.event.inputs.main_option }}"
+            sub_option="${{ github.event.inputs.sub_option }}"
+          EOF
