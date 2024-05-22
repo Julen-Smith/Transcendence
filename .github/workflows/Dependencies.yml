@@ -40,11 +40,13 @@ jobs:
     if: ${{ github.event.inputs.main_option == 'Vault' }}
     steps:
       - name: Vault command selected
-        run: echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
+        run: | 
+        echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
 
   handle-email:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.main_option == 'Email' }}
     steps:
       - name: Email command selected
-        run: echo "Email command: ${{ github.event.inputs.email_sub_option }}"
+        run: |
+        echo "Email command: ${{ github.event.inputs.email_sub_option }}"
