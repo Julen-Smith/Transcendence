@@ -8,10 +8,11 @@ on:
         required: true
         type: choice
         options:
-          - Get Unseal Keys
-          - Restart Vault (Existing secrets K.O)
-          - Introduce new secret
-          - Get Secrets
+          - Get Unseal Keys [MAIL]
+          - Get Secret Backup [MAIL]
+          - Restart Vault (Actual K.O)
+          - Introduce new secret/s
+
 
 jobs:
   handle-vault:
