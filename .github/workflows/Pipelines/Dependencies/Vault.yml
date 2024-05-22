@@ -3,8 +3,8 @@ name: Vault Pipeline
 on:
   workflow_dispatch:
     inputs:
-      main_option:
-        description: 'Choose the main command category'
+      vault_sub_option:
+        description: 'Choose the specific Vault command'
         required: true
         type: choice
         options:
@@ -12,3 +12,10 @@ on:
           - Restart Vault (Existing secrets K.O)
           - Introduce new secret
           - Get Secrets
+
+jobs:
+  handle-vault:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vault command selected
+        run: echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
