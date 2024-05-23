@@ -63,6 +63,7 @@ jobs:
             echo "DMARC: ${{ github.event.inputs.dmarc_config }}"
             echo "MX: ${{ github.event.inputs.mx_config }}"
             echo "::set-output name=command::Change config"
+          fi 
           
       - name: Execute Test Email Command
         if: steps.check_command.outputs.command == 'Test email'
