@@ -70,9 +70,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             curl -X POST http://localhost:5000/send-email \
-              -H "recipient: ${{ github.event.inputs.recipient_email }}" \
-              -H "subject: ${{ github.event.inputs.email_subject }}" \
-              -F "body= ${{ github.event.inputs.email_body }}""
+              -H "recipient: ${{ github.event.inputs.test_email }}" \
+              -H "subject: Test Email" \
+              -F "body=This is a test email."
           EOF
 
       - name: Execute Change Config Command
