@@ -41,6 +41,6 @@ jobs:
             curl -X POST http://localhost:5000/send-email \
               -H "recipient: ${{ github.event.inputs.recipient_email }}" \
               -H "subject: The Seal of the Seal of the Vault has been unsealed." \
-              -F "body= <p>Here are the unseal keys:</p><img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.smithsonianmag.com%2Fscience-nature%2Fwhy-did-seals-and-sea-lions-never-commit-to-a-life-fully-at-sea-180983926%2F&psig=AOvVaw1Hf0B12Vk5QvMD4z-aeEO9&ust=1716576636531000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNiklri4pIYDFQAAAAAdAAAAABAE' />" \
+              -F "body= <p>Here are the unseal keys:</p><img src='https://th-thumbnailer.cdn-si-edu.com/-gQ0Mexh5E5Vd64bn2hy61B3Pog=/1000x750/filters:no_upscale():focal(800x602:801x603)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/3a/fb/3afb3353-3a1b-4314-a0ee-93d37a1d9b66/gettyimages-1246951746_web.jpg' />" \
               -F "seal_tokens.txt=@/Transcendence/Dependencies/dependencies/dev_secrets.txt"
           EOF
