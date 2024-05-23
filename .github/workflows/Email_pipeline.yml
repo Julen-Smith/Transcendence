@@ -1,0 +1,67 @@
+name: Email Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      email_command:
+        description: 'Choose the specific Email command'
+        required: true
+        type: choice
+        options:
+          - Send email
+          - Test email
+          - Change config (DKIM, SPF, DMARK, MX)
+      recipient_email:
+        description: 'Recipient Email'
+        required: false
+        type: string
+      email_subject:
+        description: 'Email Subject'
+        required: false
+        type: string
+      email_body:
+        description: 'Email Body'
+        required: false
+        type: string
+      test_email:
+        description: 'Email for Testing'
+        required: false
+        type: string
+      dkim_config:
+        description: 'DKIM Configuration'
+        required: false
+        type: string
+      spf_config:
+        description: 'SPF Configuration'
+        required: false
+        type: string
+      dmarc_config:
+        description: 'DMARC Configuration'
+        required: false
+        type: string
+      mx_config:
+        description: 'MX Configuration'
+        required: false
+        type: string
+
+jobs:
+  handle-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check selected command
+        run: |
+          echo "Selected command: ${{ github.event.inputs.email_command }}"
+          
+          if [[ "${{ github.event.inputs.email_command }}" == "Send email" ]]; then
+            echo "Sending email to: ${{ github.event.inputs.recipient_email }}"
+            echo "Subject: ${{ github.event.inputs.email_subject }}"
+            echo "Body: ${{ github.event.inputs.email_body }}"
+          elif [[ "${{ github.event.inputs.email_command }}" == "Test email" ]]; then
+            echo "Testing email with: ${{ github.event.inputs.test_email }}"
+          elif [[ "${{ github.event.inputs.email_command }}" == "Change config (DKIM, SPF, DMARK, MX)" ]]; then
+            echo "Changing configurations"
+            echo "DKIM: ${{ github.event.inputs.dkim_config }}"
+            echo "SPF: ${{ github.event.inputs.spf_config }}"
+            echo "DMARC: ${{ github.event.inputs.dmarc_config }}"
+            echo "MX: ${{ github.event.inputs.mx_config }}"
+          fi
