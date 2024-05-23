@@ -3,7 +3,7 @@ name: Vault Pipeline
 on:
   workflow_dispatch:
     inputs:
-      vault_sub_option:
+      vault_options:
         description: 'Choose the specific Vault command'
         required: true
         type: choice
@@ -11,13 +11,23 @@ on:
           - Get Unseal Keys [MAIL]
           - Get Secret Backup [MAIL]
           - Restart Vault (Actual K.O)
-          - Introduce new secret/s
-
 
 jobs:
   handle-vault:
     runs-on: ubuntu-latest
     steps:
-      - name: Vault command selected
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Check selected command
+        id: check_command
         run: |
-        echo "Vault command: ${{ github.event.inputs.vault_sub_option }}"
+          echo "Selected command: ${{ github.event.inputs.vault_option }}"
+          
+          if [[ "${{ github.event.inputs.vault_option }}" == "Restart Vault (Actual K.O)" ]]; then
+            echo "Vamo"
+          elif [[ "${{ github.event.inputs.vault_option }}" == "Get Secret Backup [MAIL]" ]]; then
+            echo "Vamo2"
+          fi 
