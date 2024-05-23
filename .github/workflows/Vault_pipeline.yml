@@ -9,8 +9,11 @@ on:
         type: choice
         options:
           - Get Unseal Keys [MAIL]
-          - Get Secret Backup [MAIL]
-          - Restart Vault (Actual K.O)
+          - Get Secrets Backup [MAIL]
+      recipient_email:
+        description: 'Recipient Email'
+        required: true
+        type: string
 
 jobs:
   handle-vault:
@@ -21,13 +24,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Check selected command
-        id: check_command
+      - name: Execute Test Email Command
+        if: steps.check_command.outputs.command == 'Get Unseal Keys [MAIL]'
         run: |
-          echo "Selected command: ${{ github.event.inputs.vault_option }}"
-          
-          if [[ "${{ github.event.inputs.vault_option }}" == "Restart Vault (Actual K.O)" ]]; then
-            echo "Vamo"
-          elif [[ "${{ github.event.inputs.vault_option }}" == "Get Secret Backup [MAIL]" ]]; then
-            echo "Vamo2"
-          fi 
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
+            curl -X POST http://localhost:5000/send-email \
+              -H "recipient: ${{ github.event.inputs.recipient_email }}" \
+              -H "subject: The Seal of Seal the Vault has been unsealed. " \
+              -F "body= https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.smithsonianmag.com%2Fscience-nature%2Fwhy-did-seals-and-sea-lions-never-commit-to-a-life-fully-at-sea-180983926%2F&psig=AOvVaw1Hf0B12Vk5QvMD4z-aeEO9&ust=1716576636531000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNiklri4pIYDFQAAAAAdAAAAABAE"
+              -F "seal_tokens.txt=@/Transcendence/Dependencies/dependencies/dev_secrets.txt"
+          EOF
