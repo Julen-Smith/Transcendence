@@ -70,7 +70,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
             curl -X POST http://localhost:5000/send-email \
-              -H "recipient: ${{ github.event.inputs.test_email }}" \
+              -H "recipient: ${{ github.event.inputs.recipient_email }}" \
               -H "subject: ${{ github.event.inputs.email_subject }}" \
               -F "body=${{ github.event.inputs.email_body }}"
           EOF
