@@ -55,7 +55,6 @@ jobs:
           
           if [[ "${{ github.event.inputs.email_command }}" == "Test email" ]]; then
             echo "Testing email with: ${{ github.event.inputs.test_email }}"
-            echo "curl -X POST http://localhost:5000/send-email -H \"recipient: ${{ github.event.inputs.test_email }}\" -H \"subject: Test Email\" -F \"body=This is a test email.\""
             echo "::set-output name=command::Test email"
           elif [[ "${{ github.event.inputs.email_command }}" == "Change config (DKIM, SPF, DMARC, MX)" ]]; then
             echo "Changing configurations"
@@ -64,27 +63,24 @@ jobs:
             echo "DMARC: ${{ github.event.inputs.dmarc_config }}"
             echo "MX: ${{ github.event.inputs.mx_config }}"
             echo "::set-output name=command::Change config"
-          fi
           
       - name: Execute Test Email Command
         if: steps.check_command.outputs.command == 'Test email'
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
             curl -X POST http://localhost:5000/send-email \
               -H "recipient: ${{ github.event.inputs.test_email }}" \
-              -H "subject: Test Email" \
-              -F "body=This is a test email."
+              -H "subject: ${{ github.event.inputs.email_subject }}" \
+              -F "body=${{ github.event.inputs.email_body }}"
           EOF
 
       - name: Execute Change Config Command
         if: steps.check_command.outputs.command == 'Change config'
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
             # Here you can add commands to update the DKIM, SPF, DMARC, and MX settings
             echo "Updating DKIM: ${{ github.event.inputs.dkim_config }}"
             echo "Updating SPF: ${{ github.event.inputs.spf_config }}"
             echo "Updating DMARC: ${{ github.event.inputs.dmarc_config }}"
             echo "Updating MX: ${{ github.event.inputs.mx_config }}"
-            # Example of updating configurations
-            # curl -X POST http://localhost:5000/update-config -F "dkim=${{ github.event.inputs.dkim_config }}" -F "spf=${{ github.event.inputs.spf_config }}" -F "dmarc=${{ github.event.inputs.dmarc_config }}" -F "mx=${{ github.event.inputs.mx_config }}"
           EOF
